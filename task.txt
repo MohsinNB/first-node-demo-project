@@ -1,0 +1,14 @@
+REST API - JSON        
+
+What should I do in this project
+
+GET/users - get all users data as a html render
+GET/API/Users - get the all users name
+GET/API/Users/1 - get the user with Id 1
+GET/Users/2 - get the user with Id 2
+
+POST/API/Users - Create new user
+
+PATCH/API/Users/1 - Edit the user 1
+
+DELETE/API/Users/1 - Delete the user with Id 1  
