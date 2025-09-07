@@ -7,6 +7,13 @@ GET/API/Users - get the all users name
 GET/API/Users/1 - get the user with Id 1
 GET/Users/2 - get the user with Id 2
 
+there is the id 1 or 2, it's not fixed. it should be dynamic. anyone can ask with any id
+
+This term call dynamic path parameter
+GET/users/:id
+
+there :id means - variable(It's can store any kind of data and the server will query at this)
+
 POST/API/Users - Create new user
 
 PATCH/API/Users/1 - Edit the user 1

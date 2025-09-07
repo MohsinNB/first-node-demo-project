@@ -4,19 +4,27 @@ const app = express();
 const PORT = 8000;
 
 // Routes
-app.get("/api/users", (req, res) => {
-  return res.json(users);
-});
-
 // GET/users
 app.get("/users", (req, res) => {
   const html = `
     <ol>
-    ${users.map((user) => `<li>${user.first_name}</li>`)}
+    ${users.map((user) => `<li>${user.first_name}</li>`).join("")}
     </ol>
     `;
 
   return res.send(html);
+});
+// REST api
+
+app.get("/api/users", (req, res) => {
+  return res.json(users);
+});
+
+app.get("/users/:id", (req, res) => {
+  const id = Number(req.params.id);
+
+  const user = users.find((user) => user.id === id);
+  return res.json(user);
 });
 
 app.listen(PORT, () => {
