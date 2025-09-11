@@ -34,7 +34,29 @@ app
   })
   .patch((req, res) => {
     // Edit user with Id
-    return res.json({ status: "pending" });
+    const { id, ...updates } = req.body;
+    // give the error message if id is not truthy
+
+    if (!id) {
+      return res.json({ status: "error" }, { message: "user id required" });
+    }
+
+    // find the specific user using the id
+    const findUser = users.find((user) => user.id === Number(id));
+    if (findUser === -1) {
+      return res
+        .status("404")
+        .json({ status: "error" }, { message: "user id does not exist" });
+    }
+    // replace the data with the updated data
+    users[findUser] = { ...users[findUser], ...updates };
+    console.log(typeof updates);
+
+    return res.json({
+      status: "success",
+      message: "User updated successfully",
+      user: users[findUser],
+    });
   })
   .delete((req, res) => {
     // Delete user with Id
