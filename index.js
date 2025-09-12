@@ -1,8 +1,9 @@
 const express = require("express");
-const users = require("./MOCK_DATA.json");
+let users = require("./MOCK_DATA.json");
 const app = express();
 const fs = require("fs");
 const { json } = require("stream/consumers");
+
 const PORT = 8000;
 
 // Middleware - Plugin
@@ -60,7 +61,29 @@ app
   })
   .delete((req, res) => {
     // Delete user with Id
-    return res.json({ status: "pending" });
+    const id = req.body.id;
+
+    fs.readFile("./MOCK_DATA.json", { encoding: "utf-8" }, (err, data) => {
+      if (err) {
+        return res
+          .status(500)
+          .json({ status: "error", message: "Could not read file" });
+      }
+      let users = JSON.parse(data);
+      const newUsers = users.filter((user) => user.id !== Number(id));
+
+      fs.writeFile("./MOCK_DATA.json", JSON.stringify(newUsers), (err) => {
+        if (err) {
+          return res
+            .status(500)
+            .json({ status: "error", message: "Could not write file" });
+        }
+      });
+      return res.json({
+        status: "success",
+        message: "successfully deleted user. please restart your server",
+      });
+    });
   });
 
 app.post("/api/users", (req, res) => {
